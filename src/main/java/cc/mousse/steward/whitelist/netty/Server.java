@@ -4,6 +4,7 @@ import cc.mousse.steward.whitelist.common.Config;
 import cc.mousse.steward.whitelist.common.Common;
 import cc.mousse.steward.whitelist.netty.handler.EventHandler;
 import cc.mousse.steward.whitelist.netty.handler.ReceiptHandler;
+import cc.mousse.steward.whitelist.service.BaseService;
 import cc.mousse.steward.whitelist.to.EventTo;
 import cc.mousse.steward.whitelist.to.ReceiptTo;
 import cc.mousse.steward.whitelist.utils.ApiUtil;
@@ -21,6 +22,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrameAggregator;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+
 import java.util.Objects;
 
 import static cc.mousse.steward.whitelist.common.Common.*;
@@ -63,6 +65,7 @@ public class Server {
                                 && Objects.equals(
                                     "lifecycle", StrUtil.removeQuotes(eventType.toString()))) {
                               var message = "已就绪";
+                              log.info(message);
                               ApiUtil.sendLog(message);
                             } else if (jsonNode.get("retcode") != null) {
                               // 消息类型为消息回执
@@ -88,6 +91,6 @@ public class Server {
               }
             })
         .bind(Integer.parseInt(Config.getServerPort()));
-    log.info("已就绪");
+    BaseService.initWhitelist();
   }
 }

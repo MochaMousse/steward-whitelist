@@ -18,6 +18,12 @@ public class MultiLoginService {
     return DsUtil.getOneFieldSet(Common.MULTI_LOGIN_DATA_SOURCE, sql);
   }
 
+  public static Set<String> getAllLowerNames() {
+    var sql =
+        "SELECT LOWER(current_username) FROM multilogin.multilogin_in_game_profile_v2 AS t1 JOIN multilogin.multilogin_user_data_v2 AS t2 ON t1.in_game_uuid = t2.in_game_profile_uuid";
+    return DsUtil.getOneFieldSet(Common.MULTI_LOGIN_DATA_SOURCE, sql);
+  }
+
   public static boolean isExistWhitelist(String name) {
     var sql =
         "SELECT whitelist FROM multilogin.multilogin_in_game_profile_v2 AS t1 JOIN multilogin.multilogin_user_data_v2 AS t2 ON t1.in_game_uuid = t2.in_game_profile_uuid WHERE whitelist = 1 and current_username = ?";

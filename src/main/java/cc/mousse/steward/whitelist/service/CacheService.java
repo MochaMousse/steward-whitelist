@@ -11,6 +11,12 @@ import java.util.Set;
 public class CacheService {
   private CacheService() {}
 
+  public static void intCache() {
+    var sql =
+        "CREATE TABLE IF NOT EXISTS steward_cache (`name` VARCHAR(32) NOT NULL , CONSTRAINT `name` UNIQUE (`name`))";
+    DsUtil.updateOne(Common.MULTI_LOGIN_DATA_SOURCE, sql);
+  }
+
   public static synchronized Set<String> getAll() {
     var sql = "SELECT LOWER(name) FROM multilogin.steward_cache";
     return DsUtil.getOneFieldSet(Common.MULTI_LOGIN_DATA_SOURCE, sql);

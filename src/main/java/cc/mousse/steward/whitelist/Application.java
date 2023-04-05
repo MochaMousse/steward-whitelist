@@ -5,7 +5,7 @@ import cc.mousse.steward.whitelist.common.Common;
 import cc.mousse.steward.whitelist.netty.Server;
 import cc.mousse.steward.whitelist.utils.ApiUtil;
 import cc.mousse.steward.whitelist.utils.DsUtil;
-import lombok.SneakyThrows;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,9 +31,12 @@ public class Application extends JavaPlugin {
   }
 
   @Override
-  @SneakyThrows
   public void onDisable() {
-    ApiUtil.sendLog("已关闭");
+    try {
+      ApiUtil.sendLog("已关闭");
+    } catch (JsonProcessingException e) {
+      ApiUtil.apiFailMsg(e);
+    }
     // Plugin shutdown logic
     LEADER.shutdownGracefully();
     WORKER.shutdownGracefully();

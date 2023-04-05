@@ -16,9 +16,15 @@ import java.util.*;
 /**
  * @author PhineasZ
  */
-public class GroupService {
+public class BaseService {
+  /** 服务器启动时初始化白名单 */
+  public static void initWhitelist() {
+    CacheService.intCache();
+    CacheService.getAll().forEach(Application::addWhitelist);
+  }
+
   /** 清理白名单 */
-  private void flushWhitelist() {
+  private static void flushWhitelist() {
     var log = Common.getLog();
     try {
       // 垃圾桶
@@ -37,8 +43,8 @@ public class GroupService {
       // 遍历所有有效群名片
       // 若blessingsink.player中不存在则过滤
       legalCards.removeIf(name -> !playersInBlessingSkin.contains(name));
-      // multilogin.multilogin_in_game_profile_v2角色集合
-      var playersInMultiLogin = MultiLoginService.getAllWhitelistLowerNames();
+      // multilogin.multilogin_in_game_profile_v2所有角色集合
+      var playersInMultiLogin = MultiLoginService.getAllLowerNames();
       // 遍历multilogin.steward_cache缓存集合
       for (var player : CacheService.getAll()) {
         if (playersInMultiLogin.contains(player)) {
@@ -52,7 +58,8 @@ public class GroupService {
           bin.add(player);
         }
       }
-      for (var player : playersInMultiLogin) {
+      // multilogin.multilogin_in_game_profile_v2有白名单的角色集合
+      for (var player : MultiLoginService.getAllWhitelistLowerNames()) {
         // 若有效群名片不存在，取消白名单
         if (!legalCards.contains(player)) {
           Application.removeWhitelist(player);
@@ -66,7 +73,7 @@ public class GroupService {
       }
       log.info("完成清理白名单");
     } catch (Exception e) {
-      log.severe(e.getMessage());
+      ApiUtil.apiFailMsg(e);
     }
   }
 
@@ -76,7 +83,6 @@ public class GroupService {
    * @param event 事件
    */
   private void addWhitelist(EventTo event) {
-    var log = Common.getLog();
     try {
       // 结果集
       var result = new Result();
@@ -107,8 +113,7 @@ public class GroupService {
       }
       sendResult(result, event);
     } catch (Exception e) {
-      e.printStackTrace();
-      log.severe(e.getMessage());
+      ApiUtil.apiFailMsg(e);
     }
   }
 
@@ -138,7 +143,7 @@ public class GroupService {
                 ApiUtil.sendGroupReply(
                     String.valueOf(event.getMessageId()), message, event.getUserId());
               } catch (JsonProcessingException e) {
-                log.severe(e.getMessage());
+                ApiUtil.apiFailMsg(e);
               }
             });
   }
@@ -149,7 +154,6 @@ public class GroupService {
    * @param event 事件
    */
   private void addTempWhitelist(EventTo event) {
-    var log = Common.getLog();
     // 获取所有有效角色名
     var legalNames = StrUtil.getLegal(event.getMessage(), false);
     // 结果集
@@ -170,7 +174,7 @@ public class GroupService {
               try {
                 ApiUtil.sendLog(message);
               } catch (JsonProcessingException e) {
-                log.severe(e.getMessage());
+                ApiUtil.apiFailMsg(e);
               }
             });
   }
@@ -240,7 +244,7 @@ public class GroupService {
         addWhitelist(event);
       }
     } catch (JsonProcessingException e) {
-      log.severe(e.getMessage());
+      ApiUtil.apiFailMsg(e);
     }
   }
 
@@ -258,7 +262,7 @@ public class GroupService {
       log.info(massage);
       ApiUtil.sendLog(massage);
     } catch (JsonProcessingException e) {
-      log.severe(e.getMessage());
+      ApiUtil.apiFailMsg(e);
     }
   }
 
@@ -290,7 +294,7 @@ public class GroupService {
       try {
         ApiUtil.sendLog(message);
       } catch (JsonProcessingException e) {
-        log.severe(e.getMessage());
+        ApiUtil.apiFailMsg(e);
       }
     } else if (cardNew.isEmpty()) {
       // 群名片为空时自动设置群名片
@@ -302,7 +306,7 @@ public class GroupService {
           setNickNameAsCard(userId, groupMember.getNickName());
         }
       } catch (JsonProcessingException e) {
-        log.severe(e.getMessage());
+        ApiUtil.apiFailMsg(e);
       }
     }
     flushWhitelist();

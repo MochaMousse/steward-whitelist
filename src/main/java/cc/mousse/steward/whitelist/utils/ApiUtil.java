@@ -74,7 +74,7 @@ public class ApiUtil {
    * @throws JsonProcessingException 异常
    */
   public static void sendLog(String message) throws JsonProcessingException {
-    sendGroupMsg(Config.getReportGroupId(), "[" + APP_NAME + "]::" + message);
+    sendGroupMsg(Config.getReportGroupId(), "[" + APP_NAME + "]::[info]::" + message);
   }
 
   /**
@@ -151,6 +151,12 @@ public class ApiUtil {
       }
     }
     return echoId;
+  }
+
+  public static void apiFailMsg(Exception e) {
+    var log = Common.getLog();
+    log.severe("API发送错误，可能未与GO-CQHTTP连接");
+    log.severe(e.getMessage());
   }
 
   @Data

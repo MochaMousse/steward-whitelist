@@ -1,6 +1,6 @@
 package cc.mousse.steward.whitelist.netty.handler;
 
-import cc.mousse.steward.whitelist.service.GroupService;
+import cc.mousse.steward.whitelist.service.BaseService;
 import cc.mousse.steward.whitelist.to.EventTo;
 import io.netty.channel.ChannelHandlerContext;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public class EventHandler extends SimpleChannelInboundHandler<EventTo> {
     if (event.getUserId() != null && Objects.equals(event.getUserId(), event.getSelfId())) {
       return;
     }
-    var groupService = new GroupService();
+    var groupService = new BaseService();
     THREAD_POOL.execute(
         () -> {
           var postType = event.getPostType();
