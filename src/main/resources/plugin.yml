@@ -1,0 +1,5 @@
+name: steward-whitelist
+version: '${project.version}'
+main: cc.mousse.steward.whitelist.Application
+api-version: 1.19
+author: PhineasZ
