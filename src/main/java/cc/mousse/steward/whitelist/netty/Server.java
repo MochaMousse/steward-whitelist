@@ -62,7 +62,7 @@ public class Server {
                             if (eventType != null
                                 && Objects.equals(
                                     "lifecycle", StrUtil.removeQuotes(eventType.toString()))) {
-                              var message = "steward-whitelist已就绪";
+                              var message = "已就绪";
                               ApiUtil.sendLog(message);
                             } else if (jsonNode.get("retcode") != null) {
                               // 消息类型为消息回执
@@ -88,6 +88,6 @@ public class Server {
               }
             })
         .bind(Integer.parseInt(Config.getServerPort()));
-    log.info("服务已就绪");
+    log.info("已就绪");
   }
 }

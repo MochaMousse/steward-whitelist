@@ -60,7 +60,7 @@ public class GroupService {
         }
       }
       if (!bin.isEmpty()) {
-        var message = StrUtil.getString("清理 [{}] 条白名单 → {}", bin.size(), bin);
+        var message = StrUtil.getString("清理[{}]条白名单: {}", bin.size(), bin);
         log.info(message);
         ApiUtil.sendLog(message);
       }
@@ -122,7 +122,7 @@ public class GroupService {
               switch (status) {
                 case SUCCESS -> {
                   try {
-                    ApiUtil.sendLog(StrUtil.getString("添加 [{}] 条白名单 → {}", list.size(), list));
+                    ApiUtil.sendLog(StrUtil.getString("添加[{}]条白名单: {}", list.size(), list));
                   } catch (JsonProcessingException e) {
                     log.severe(e.getMessage());
                   }
@@ -163,9 +163,8 @@ public class GroupService {
             (status, list) -> {
               var message = "";
               switch (status) {
-                case SUCCESS -> message =
-                    StrUtil.getString("添加 [{}] 条临时白名单 → {}", list.size(), list);
-                case WHITELIST_ALREADY_EXISTS -> message = StrUtil.getString("{} 已拥有白名单", list);
+                case SUCCESS -> message = StrUtil.getString("添加[{}]条临时白名单: {}", list.size(), list);
+                case WHITELIST_ALREADY_EXISTS -> message = StrUtil.getString("已拥有白名单: {}", list);
                 default -> message = "未知分支";
               }
               try {
@@ -234,7 +233,7 @@ public class GroupService {
           card = groupMember.getCard();
         }
         // 白名单请求
-        var message = StrUtil.getString("\"{}\" [{}] 请求更新白名单", card, userId);
+        var message = StrUtil.getString("[{}]::请求更新白名单: \"{}\"", userId, card);
         log.info(message);
         ApiUtil.sendLog(message);
         flushWhitelist();
@@ -255,7 +254,7 @@ public class GroupService {
     var log = Common.getLog();
     try {
       ApiUtil.setGroupCard(userId, nickName);
-      var massage = StrUtil.getString("为 \"{}\" [{}] 设置群名片", nickName, userId);
+      var massage = StrUtil.getString("[{}]设置群名片: \"{}\"", userId, nickName);
       log.info(massage);
       ApiUtil.sendLog(massage);
     } catch (JsonProcessingException e) {
@@ -286,7 +285,7 @@ public class GroupService {
     var cardNew = event.getCardNew();
     var cardOld = event.getCardOld();
     if (!cardNew.isEmpty() && !Objects.equals(cardOld, cardNew)) {
-      var message = StrUtil.getString("\"{}\" [{}] 更新群名片 → \"{}\"", cardOld, userId, cardNew);
+      var message = StrUtil.getString("[{}]更新群名片: \"{}\" → \"{}\"", userId, cardOld, cardNew);
       log.info(message);
       try {
         ApiUtil.sendLog(message);

@@ -3,6 +3,7 @@ package cc.mousse.steward.whitelist;
 import cc.mousse.steward.whitelist.common.Config;
 import cc.mousse.steward.whitelist.common.Common;
 import cc.mousse.steward.whitelist.netty.Server;
+import cc.mousse.steward.whitelist.utils.ApiUtil;
 import cc.mousse.steward.whitelist.utils.DsUtil;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +33,7 @@ public class Application extends JavaPlugin {
   @Override
   @SneakyThrows
   public void onDisable() {
+    ApiUtil.sendLog("已关闭");
     // Plugin shutdown logic
     LEADER.shutdownGracefully();
     WORKER.shutdownGracefully();

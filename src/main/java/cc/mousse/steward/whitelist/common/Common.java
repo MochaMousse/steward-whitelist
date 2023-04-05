@@ -22,6 +22,7 @@ public class Common {
   public static final NioEventLoopGroup LEADER = new NioEventLoopGroup(1);
   public static final NioEventLoopGroup WORKER = new NioEventLoopGroup(2);
   public static final ObjectMapper MAPPER = new ObjectMapper();
+  public static final String APP_NAME = "steward-whitelist";
   public static final String ECHO_PREFIX = "ECHO--";
   private static Logger log;
   private static ChannelHandlerContext ctx;
