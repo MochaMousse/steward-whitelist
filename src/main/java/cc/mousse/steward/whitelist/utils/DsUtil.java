@@ -27,7 +27,7 @@ public class DsUtil {
     dataSource.init();
   }
 
-  public static synchronized Set<String> getOneFieldSet(
+  public static Set<String> getOneFieldSet(
       DruidDataSource dataSource, String sql, String... args) {
     var log = Common.getLog();
     PreparedStatement preparedStatement = null;

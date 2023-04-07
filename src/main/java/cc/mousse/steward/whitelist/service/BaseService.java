@@ -187,8 +187,11 @@ public class BaseService {
    */
   private void addWhitelist(Result result, String name) {
     if (MultiLoginService.isExistWhitelist(name)) {
-      // 已经存在白名单
+      // 有正式记录且存在白名单
       CacheService.removeOne(name);
+      result.whitelistAlreadyExists(name);
+    } else if (CacheService.isExist(name)) {
+      // 缓存中存在白名单
       result.whitelistAlreadyExists(name);
     } else if (MultiLoginService.isExist(name)) {
       // 有正式记录但没白名单
