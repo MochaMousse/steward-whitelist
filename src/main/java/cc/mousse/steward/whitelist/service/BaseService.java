@@ -43,7 +43,7 @@ public class BaseService {
       // 遍历所有有效群名片
       // 若blessingsink.player中不存在则过滤
       legalCards.removeIf(name -> !playersInBlessingSkin.contains(name));
-      // multilogin.multilogin_in_game_profile_v2所有角色集合
+      // multilogin.multilogin_in_game_profile_v3所有角色集合
       var playersInMultiLogin = MultiLoginService.getAllLowerNames();
       // 遍历multilogin.steward_cache缓存集合
       for (var player : CacheService.getAll()) {
@@ -58,7 +58,7 @@ public class BaseService {
           bin.add(player);
         }
       }
-      // multilogin.multilogin_in_game_profile_v2有白名单的角色集合
+      // multilogin.multilogin_in_game_profile_v3有白名单的角色集合
       for (var player : MultiLoginService.getAllWhitelistLowerNames()) {
         // 若有效群名片不存在，取消白名单
         if (!legalCards.contains(player)) {

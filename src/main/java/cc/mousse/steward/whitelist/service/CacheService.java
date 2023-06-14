@@ -2,6 +2,7 @@ package cc.mousse.steward.whitelist.service;
 
 import cc.mousse.steward.whitelist.common.Common;
 import cc.mousse.steward.whitelist.utils.DsUtil;
+import org.intellij.lang.annotations.Language;
 
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class CacheService {
   private CacheService() {}
 
   public static void intCache() {
-    var sql =
+    @Language("MySQL")  var sql =
         "CREATE TABLE IF NOT EXISTS steward_cache (`name` VARCHAR(32) NOT NULL , CONSTRAINT `name` UNIQUE (`name`))";
     DsUtil.updateOne(Common.MULTI_LOGIN_DATA_SOURCE, sql);
   }
