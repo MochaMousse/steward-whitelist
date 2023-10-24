@@ -96,7 +96,7 @@ public class BaseService {
         result.outOfLimit(illegalName);
       }
       var legalNames = names.get(0);
-      if (legalNames != null) {
+      if (!legalNames.isEmpty()) {
         // 存在有效角色名时，处理每个角色名
         for (var legalName : legalNames) {
           // 查看blessingsink.player是否存在该角色
