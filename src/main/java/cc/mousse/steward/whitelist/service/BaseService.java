@@ -239,8 +239,9 @@ public class BaseService {
           var groupMember = ApiUtil.getGroupMemberInfo(userId);
           card = groupMember.getCard();
         }
+        var names = StrUtil.getLegal(card);
         // 白名单请求
-        var message = StrUtil.getString("[{}]::请求更新白名单: \"{}\"", userId, card);
+        var message = StrUtil.getString("[{}]::请求更新白名单: \"{}\"", userId, names);
         log.info(message);
         ApiUtil.sendLog(message);
         flushWhitelist();

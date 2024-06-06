@@ -74,7 +74,7 @@ public class ApiUtil {
    * @throws JsonProcessingException 异常
    */
   public static void sendLog(String message) throws JsonProcessingException {
-    sendGroupMsg(Config.getReportGroupId(), "[" + APP_NAME + "]::[info]::" + message);
+    sendGroupMsg(Config.getReportGroupId(), "[" + APP_NAME + "]::" + message);
   }
 
   /**
